@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Character Quiz</title>
+</head>
+<body>
+  <div id="quiz"></div>
+
+  <script>
+    const characters = [
+      {
+        title: 'Ninja',
+        emoji: '🥷',
+        powers: ['agility', 'stealth', 'aggression'],
+      },
+      {
+        title: 'Sorcerer',
+        emoji: '🧙',
+        powers: ['magic', 'invisibility', 'necromancy'],
+      },
+      {
+        title: 'Ogre',
+        emoji: '👹',
+        powers: ['power', 'stamina', 'shapeshifting'],
+      },
+      {
+        title: 'Unicorn',
+        emoji: '🦄',
+        powers: ['flight', 'power', 'purity'],
+      },
+    ];
+
+    // Array of quiz questions
+    const quizQuestions = [
+      'Which power does this character have {emoji}?',
+      'What is the title of this character {emoji}?',
+      'Guess the character based on their powers: {powersString}?',
+    ];
+
+    let score = 0; // Initialize the user's score
+
+    function getRandomCharacter() {
+      return characters[Math.floor(Math.random() * characters.length)];
+    }
+
+    function generateQuiz() {
+      const quizContainer = document.getElementById('quiz');
+      quizContainer.innerHTML = ''; // Clear previous quiz content
+
+      if (quizQuestions.length === 0) {
+        // Quiz is complete, display final score
+        quizContainer.textContent = `Quiz Complete! Your Score: ${score}`;
+        return;
+      }
+
+      const questionIndex = Math.floor(Math.random() * quizQuestions.length);
+      const selectedQuestion = quizQuestions.splice(questionIndex, 1)[0];
+
+      const character = getRandomCharacter();
+      const powers = character.powers;
+      const correctAnswer = selectedQuestion.includes('{powersString}')
+        ? character.title
+        : powers[Math.floor(Math.random() * powers.length)];
+
+      const quizQuestion = document.createElement('div');
+      quizQuestion.textContent = selectedQuestion.replace('{emoji}', character.emoji).replace('{powersString}', powers.join(', '));
+      quizContainer.appendChild(quizQuestion);
+
+      powers.forEach((power) => {
+        const option = document.createElement('button');
+        option.textContent = power;
+        option.addEventListener('click', () => checkAnswer(power, correctAnswer));
+        quizContainer.appendChild(option);
+      });
+    }
+
+    function checkAnswer(selectedAnswer, correctAnswer) {
+      if (selectedAnswer === correctAnswer) {
+        score++; // Increase the user's score for correct answers
+        alert('Correct! 🎉');
+      } else {
+        alert(`Wrong! The correct answer is "${correctAnswer}" ${characters.emoji}. 🙁`);
+      }
+      generateQuiz(); // Generate a new question after answering
+    }
+
+    generateQuiz(); // Start the quiz when the page loads
+  </script>
+</body>
+</html>

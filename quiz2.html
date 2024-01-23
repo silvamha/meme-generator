@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiple Choice Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .question {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz">
+    <div class="question">1. What is the capital of France?</div>
+    <div class="options">
+      <label><input type="radio" name="q1" value="London"> A) London</label>
+      <label><input type="radio" name="q1" value="Paris"> B) Paris</label>
+      <label><input type="radio" name="q1" value="Rome"> C) Rome</label>
+      <label><input type="radio" name="q1" value="Madrid"> D) Madrid</label>
+    </div>
+
+    <div class="question">2. Which planet is known as the "Red Planet"?</div>
+    <div class="options">
+      <label><input type="radio" name="q2" value="Venus"> A) Venus</label>
+      <label><input type="radio" name="q2" value="Jupiter"> B) Jupiter</label>
+      <label><input type="radio" name="q2" value="Mars"> C) Mars</label>
+      <label><input type="radio" name="q2" value="Saturn"> D) Saturn</label>
+    </div>
+
+    <div class="question">3. Who wrote the play "Romeo and Juliet"?</div>
+    <div class="options">
+      <label><input type="radio" name="q3" value="William Shakespeare"> A) William Shakespeare</label>
+      <label><input type="radio" name="q3" value="Charles Dickens"> B) Charles Dickens</label>
+      <label><input type="radio" name="q3" value="Jane Austen"> C) Jane Austen</label>
+      <label><input type="radio" name="q3" value="Mark Twain"> D) Mark Twain</label>
+    </div>
+
+    <button onclick="submitQuiz()">Submit</button>
+  </div>
+
+  <script>
+    function submitQuiz() {
+      const answers = {
+        q1: document.querySelector('input[name="q1"]:checked'),
+        q2: document.querySelector('input[name="q2"]:checked'),
+        q3: document.querySelector('input[name="q3"]:checked'),
+      };
+
+      if (!answers.q1 || !answers.q2 || !answers.q3) {
+        alert("Please answer all questions.");
+        return;
+      }
+
+      const score = calculateScore(answers);
+      const resultMessage = `You scored ${score} out of 3.`;
+      alert(resultMessage);
+    }
+
+    function calculateScore(answers) {
+      let score = 0;
+      if (answers.q1.value === "Paris") score++;
+      if (answers.q2.value === "Mars") score++;
+      if (answers.q3.value === "William Shakespeare") score++;
+      return score;
+    }
+  </script>
+</body>
+</html>
